@@ -1,0 +1,43 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.1.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.expesne'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Web & REST APIs
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Database (JPA & MySQL)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Upgraded driver name for modern Spring Boot 3+ compatibility
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Messaging. The starter registers Kafka listeners; spring-kafka alone does not on Boot 4.
+	implementation 'org.springframework.boot:spring-boot-starter-kafka'
+
+	// Boilerplate reduction (Lombok)
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Testing Architecture
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
